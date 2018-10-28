@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>所有联系人</title>
+</head>
+<body>
+<h1 style="text-align: center">所有联系人</h1>
+
+    <h1>发送消息</h1>
+    <input type="text" placeholder="接收者" id="to">
+    <input type="text" placeholder="接收内容" id="message">
+    <input type="submit" value="发送" onclick="sendMsg()">
+
+    <h1>用户列表</h1>
+
+    <ul>
+        {% for contact in contact_list %}
+{#            <li> <img src="/wx/avatar?prev={{ contact.HeadImgUrl }}" > {{ contact.UserName}} {{ contact.NickName }}</li>#}
+            <li>  {{ contact.UserName}} {{ contact.NickName }}</li>
+        {% endfor %}
+    </ul>
+<script src="/static/js/jquery-1.12.4.js"></script>
+
+<script>
+     $(function () {
+            getMsg();
+        });
+
+        function getMsg() {
+            $.ajax({
+                url: '/wx/get_msg',
+                type: 'GET',
+                success:function (arg) {
+                    //console.log(arg);
+                    getMsg();
+                }
+            })
+        }
+
+
+    function sendMsg() {
+        $.ajax({
+            'url':'/wx/send_msg/',
+            'type':'POST',
+            'data':{'to':$('#to').val(),'msg':$('#message').val()},
+            success:function (arg) {
+                alert(arg)
+            }
+        })
+    }
+</script>
+</body>
+</html>

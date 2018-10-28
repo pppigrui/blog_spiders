@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+
+    <h1>个人信息</h1>
+    {{ request.session.INIT_DICT.User.NickName }}
+    <img src="/wx/avatar?prev={{ request.session.INIT_DICT.User.HeadImgUrl }}" >
+{#    {{ request.session.INIT_DICT.User.HeadImgUrl }}#}
+{#    {{ request.session.INIT_DICT }}#}
+    <h1>最近联系人</h1><a href="/wx/all_contact/" target="_blank">所有联系人</a>
+    <ul>
+    {% for contact in request.session.INIT_DICT.ContactList%}
+        <li> <img src="/wx/avatar?prev={{ contact.HeadImgUrl }}"> {{ contact.UserName}} {{ contact.NickName }}</li>
+    {% endfor %}
+    </ul>
+    <h1>公众号信息</h1>
+</body>
+</html>

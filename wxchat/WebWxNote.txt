@@ -1,0 +1,30 @@
+Web微信
+-轮询，定时每秒刷新一次
+-长轮询,hang住请求（wx登录二维码就是一个长轮询）
+        -无消息：超时之后断开，客户端立即发送请求
+        -有消息：如果有新消息就立即返回
+
+-WebSocket 连接不断开
+魔法字符串
+
+获取随机二维码
+https://login.wx.qq.com/jslogin?appid=wx782c26e4c19acffb&redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&fun=new&lang=zh_CN&_=1538472134852
+时间戳
+
+
+
+步骤：
+    1.获取时间戳
+    uuid_time = time.time()*1000
+
+    2.获得uuid_url
+    base_uuid_url = 'https://login.wx.qq.com/jslogin?appid=wx782c26e4c19acffb&redirect_uri=https%3A%2F%2Fwx.qq.com%2Fcgi-bin%2Fmmwebwx-bin%2Fwebwxnewloginpage&fun=new&lang=zh_CN&_={uuid_time}'
+    uuid_url = base_uuid_url.format(uuid_time=uuid_time)
+
+    3.得到uuid 拼接成获取二维码的url
+    https://login.weixin.qq.com/qrcode/+uuid
+
+
+
+    扫码之后没确认登录之前请求的url
+    https://login.wx.qq.com/cgi-bin/mmwebwx-bin/login?loginicon=true&uuid=oda6i7RSng==&tip=0&r=-938029028&_=1538536286864
